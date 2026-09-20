@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>X PDF — Convert Images to PDF — Fast, Private, Simple.</title>
+  <meta name="description" content="Convert Images to PDF — Fast, Private, Simple. Combine JPG, PNG and WEBP images into one PDF right in your browser. Nothing is uploaded.">
+  <meta name="theme-color" content="#0a0d2b">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background blobs -->
+  <div class="bg" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <!-- Icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 24 24">
+        <path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        <path d="M14 3v5h5"/>
+        <circle cx="9.5" cy="12.2" r="1.2"/>
+        <path d="M6.8 19l3.7-3.9 2.4 2.5 1.9-1.9 2.6 2.7"/>
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="9" rx="2.5"/>
+        <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+      </symbol>
+      <symbol id="i-image" viewBox="0 0 24 24">
+        <rect x="3.5" y="4.5" width="17" height="15" rx="3"/>
+        <circle cx="9" cy="10" r="1.6"/>
+        <path d="M4 17.5l4.6-4.4 3.4 3.2 2.6-2.4 5.4 4.6"/>
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24">
+        <path d="M20 12a8 8 0 1 1-2.5-5.8"/>
+        <path d="M20 4.5v4.8h-4.8"/>
+      </symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24">
+        <path d="M4 7h16M10 11v6M14 11v6M6 7l.9 11.2A2 2 0 0 0 8.9 20h6.2a2 2 0 0 0 2-1.8L18 7M9 7V4.5h6V7"/>
+      </symbol>
+      <symbol id="i-grip" viewBox="0 0 24 24">
+        <g fill="currentColor" stroke="none">
+          <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+          <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+          <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+        </g>
+      </symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 14.5l6-6 6 6"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.2-4.2M12 15l4.2-4.2M5 20h14"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.6v.01"/>
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="app">
+
+    <!-- ============ HEADER ============ -->
+    <header class="glass header">
+      <a class="brand" href="./" aria-label="X PDF home">
+        <span class="logo" aria-hidden="true"><svg class="icon"><use href="#i-logo"/></svg></span>
+        <span class="brand-text">
+          <span class="brand-name">X PDF</span>
+          <span class="brand-sub">Image to PDF Converter</span>
+        </span>
+      </a>
+      <div class="privacy-badge">
+        <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>
+        <span>Files stay on your device</span>
+      </div>
+    </header>
+
+    <main id="main">
+
+      <!-- Error / notice messages -->
+      <div id="alerts" class="alerts"></div>
+      <div id="liveRegion" class="sr-only" aria-live="polite" role="status"></div>
+
+      <!-- ============ EMPTY STATE: HERO + UPLOAD ============ -->
+      <section id="emptyView" class="view-empty" aria-labelledby="heroTitle">
+        <div class="hero">
+          <h1 id="heroTitle">Convert Images to PDF</h1>
+          <p>Combine your images into a high-quality PDF in seconds.</p>
+        </div>
+
+        <div class="glass upload-card">
+          <div id="dropzone" class="dropzone">
+            <div class="sheets" aria-hidden="true">
+              <span class="sheet s1"></span>
+              <span class="sheet s2"></span>
+              <span class="sheet s3"><svg class="icon"><use href="#i-image"/></svg></span>
+            </div>
+            <p class="dz-title">Drop images here</p>
+            <p class="dz-sub">or click to browse</p>
+            <button type="button" id="chooseBtn" class="btn btn-primary btn-lg">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+              Choose Images
+            </button>
+            <p class="dz-formats">Turn multiple images into one PDF without uploading anything.</p>
+            <p class="dz-formats-list">JPG, JPEG, PNG, WEBP</p>
+          </div>
+          <p class="privacy-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Your images never leave your device.</p>
+        </div>
+      </section>
+
+      <!-- ============ EDITOR ============ -->
+      <section id="editorView" class="workspace" hidden aria-label="PDF editor">
+
+        <div class="col-main" id="colMain">
+          <section class="glass panel dropzone-panel" id="editorPanel" aria-labelledby="imagesTitle">
+            <div class="panel-head">
+              <div>
+                <h2 id="imagesTitle">Your Images</h2>
+                <p id="imageCount" class="muted">0 images</p>
+              </div>
+              <button type="button" id="addMoreBtn" class="btn btn-ghost">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                Add Images
+              </button>
+            </div>
+            <ol id="imageList" class="image-list" aria-label="Images in page order"></ol>
+            <p class="muted small hint">Drag the handle or use the arrows to change page order. Drop more images anywhere to add them.</p>
+          </section>
+
+          <section class="glass panel" aria-labelledby="previewTitle">
+            <div class="panel-head">
+              <h2 id="previewTitle">PDF Preview</h2>
+              <p id="previewMeta" class="muted"></p>
+            </div>
+            <div id="previewGrid" class="preview-grid"></div>
+          </section>
+        </div>
+
+        <aside class="col-side">
+          <section class="glass panel" id="settingsPanel" aria-labelledby="settingsTitle">
+            <h2 id="settingsTitle">PDF Settings</h2>
+
+            <div class="field">
+              <label for="pageSize">Page size</label>
+              <select id="pageSize">
+                <option value="a4" selected>A4</option>
+                <option value="letter">Letter</option>
+                <option value="a5">A5</option>
+                <option value="original">Original Image Size</option>
+              </select>
+            </div>
+
+            <fieldset class="field" id="orientationField">
+              <legend>Orientation</legend>
+              <div class="segmented">
+                <label><input type="radio" name="orientation" value="portrait"><span>Portrait</span></label>
+                <label><input type="radio" name="orientation" value="landscape"><span>Landscape</span></label>
+                <label><input type="radio" name="orientation" value="auto" checked><span>Auto</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="field" id="fitField">
+              <legend>Image fit</legend>
+              <div class="segmented">
+                <label><input type="radio" name="fit" value="fit" checked><span>Fit to Page</span></label>
+                <label><input type="radio" name="fit" value="fill"><span>Fill Page</span></label>
+                <label><input type="radio" name="fit" value="original"><span>Original Size</span></label>
+              </div>
+            </fieldset>
+            <p id="originalNote" class="muted small note" hidden>Each page is sized to match its image, so orientation and fit don’t apply.</p>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="margin">Margin</label>
+                <output id="marginOut" for="margin">20 px</output>
+              </div>
+              <input type="range" id="margin" min="0" max="50" step="1" value="20">
+            </div>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="quality">Image quality</label>
+                <output id="qualityOut" for="quality">High</output>
+              </div>
+              <input type="range" id="quality" min="1" max="3" step="1" value="3" aria-valuetext="High">
+              <div class="range-ticks" aria-hidden="true"><span>Low</span><span>Medium</span><span>High</span></div>
+            </div>
+          </section>
+
+          <section class="glass panel" aria-labelledby="exportTitle">
+            <h2 id="exportTitle" class="sr-only">Create PDF</h2>
+            <div class="field">
+              <label for="filename">PDF Filename</label>
+              <div class="filename-input">
+                <input id="filename" type="text" value="images-to-pdf" maxlength="80" autocomplete="off" autocapitalize="off" spellcheck="false">
+                <span class="suffix" aria-hidden="true">.pdf</span>
+              </div>
+            </div>
+
+            <div id="progress" class="progress" hidden>
+              <p id="progressText" class="progress-text">Preparing images…</p>
+              <div class="progress-bar" role="progressbar" aria-label="PDF creation progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressFill"></span>
+              </div>
+            </div>
+
+            <button type="button" id="downloadBtn" class="btn btn-primary btn-lg btn-block">
+              <span class="spinner" aria-hidden="true"></span>
+              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+              <span id="downloadLabel">Download PDF</span>
+            </button>
+          </section>
+        </aside>
+      </section>
+
+      <!-- ============ SUCCESS ============ -->
+      <section id="successView" class="glass success" hidden aria-labelledby="successTitle">
+        <div class="check" aria-hidden="true">
+          <svg class="icon"><use href="#i-check"/></svg>
+        </div>
+        <h2 id="successTitle" tabindex="-1">Your PDF is ready</h2>
+        <p id="successText">0 images successfully converted.</p>
+        <p id="successFile" class="muted small"></p>
+        <div class="success-actions">
+          <button type="button" id="downloadAgainBtn" class="btn btn-primary btn-lg">
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            Download PDF
+          </button>
+          <button type="button" id="resetBtn" class="btn btn-ghost btn-lg">Convert More Images</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="glass footer">
+      <span>© 2026 X PDF</span>
+      <span class="footer-note">Processed locally in your browser. No files are uploaded.</span>
+      <span>Private • Fast • Browser-based</span>
+    </footer>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*" multiple hidden>
+
+  <!-- pdf-lib 1.17.1 (CDN, with a local copy as an offline fallback) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script>window.PDFLib || document.write('<script src="pdf-lib_min.js"><\/script>');</script>
+  <script src="script.js"></script>
+</body>
+</html>
